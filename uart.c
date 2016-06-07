@@ -118,7 +118,7 @@ void uart_process_edges() {
     static uint_fast32_t last_debug = 0;
 
 
-    uint_fast32_t curms = hw_get_milliseconds();
+    uint_fast32_t curms = hw_get_time_ms();
     if (curms % 5000 == 0 && last_debug < curms) {
         ticks = 0; // XXX SHITTY WORKAROUND
         last_debug = curms;
@@ -142,7 +142,7 @@ void uart_process_edges() {
         return;
     edge edge = RBUFFER_READ(edges);
 
-    if (hw_get_milliseconds() < 100)
+    if (hw_get_time_ms() < 100)
         return; // allow some initial noise, just in case
 
     if (!initialized) { // TODO test if start bit is low

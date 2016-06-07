@@ -121,7 +121,7 @@ void __ISR(_CHANGE_NOTICE_VECTOR, IPL6AUTO) ChangeNotice_Handler(void) {
     // some ugly stuff here.
     // This handler must finish in ≈0.03 ms
     //mPORTCRead();
-    if (hw_get_milliseconds() < 100) { // allow some initial noise
+    if (hw_get_time_ms() < 100) { // allow some initial noise
         mCNClearIntFlag();
         return;
     }

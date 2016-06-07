@@ -23,4 +23,4 @@
 
 void setup_timing();
 float get_time();
-uint_fast32_t get_milliseconds();
+uint_fast32_t get_time_ms();

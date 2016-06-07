@@ -52,10 +52,10 @@ bool detect_charged(bool reset) {
     static uint_fast32_t then = 0;
     static float voltage_then = 0;
     static float temperature_then = 0;
-    uint_fast32_t now = hw_get_milliseconds();
+    uint_fast32_t now = hw_get_time_ms();
 
     if (reset) {
-        then = hw_get_milliseconds();
+        then = hw_get_time_ms();
         voltage_then = get_battery_voltage_after_shunt();
         temperature_then = get_battery_temperature();
         return false;
@@ -165,7 +165,7 @@ void charging_step() {
     if (!configured)
         return;
     static uint_fast32_t then = 0;
-    uint_fast32_t now = hw_get_milliseconds();
+    uint_fast32_t now = hw_get_time_ms();
     if (then + 30 < now) { // correct approximately every 200 ms
         if (get_battery_current() > CHARGING_MAX_CURRENT) {
             if (charging_duty_cycle > CHARGING_DUTY_INITIAL)

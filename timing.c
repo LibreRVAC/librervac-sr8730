@@ -41,6 +41,6 @@ float get_time() {
     return milliseconds * 0.001;
 }
 
-uint_fast32_t get_milliseconds() {
+uint_fast32_t get_time_ms() {
     return milliseconds;
 }

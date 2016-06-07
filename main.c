@@ -84,22 +84,22 @@ void step() {
 
     static uint_fast32_t dock_detect_debounce = 0;
     if (READPIN(PIN_ADAPTER_DETECT)
-            && dock_detect_debounce + 300 < hw_get_milliseconds()) {
+            && dock_detect_debounce + 300 < hw_get_time_ms()) {
         dock_connect();
-        dock_detect_debounce = hw_get_milliseconds();
+        dock_detect_debounce = hw_get_time_ms();
     } else if (!READPIN(PIN_ADAPTER_DETECT)
-            && dock_detect_debounce + 300 < hw_get_milliseconds()) {
+            && dock_detect_debounce + 300 < hw_get_time_ms()) {
         dock_disconnect(); // TODO we're overcalling it a bit. It's OK but could be better
-        dock_detect_debounce = hw_get_milliseconds();
+        dock_detect_debounce = hw_get_time_ms();
     }
 
     /*
     static uint_fast32_t lastms = 0;
-    if (hw_get_milliseconds() % 250 == 0 && lastms < hw_get_milliseconds()) {
-        lastms = hw_get_milliseconds();
+    if (hw_get_time_ms() % 250 == 0 && lastms < hw_get_time_ms()) {
+        lastms = hw_get_time_ms();
         char buf[140];
         sprintf(buf, "{\"c\":\"log\", \"str\":\"ms=%d Bat T=%fC; V1=%fV; V2=%fV; d=%fV; curr=%fA\"}",
-                hw_get_milliseconds(),
+                hw_get_time_ms(),
                 (double) get_battery_temperature(),
                 (double) get_battery_voltage_before_shunt(),
                 (double) get_battery_voltage_after_shunt(),
@@ -112,9 +112,9 @@ void step() {
     }*/
 
     static uint_fast32_t lastms2 = 0;
-    if (hw_get_milliseconds() % 5000 == 0 && lastms2 < hw_get_milliseconds()) {
+    if (hw_get_time_ms() % 5000 == 0 && lastms2 < hw_get_time_ms()) {
         //cord_buzzer_queue_beep(300, 0.05, 0.1);
-        lastms2 = hw_get_milliseconds();
+        lastms2 = hw_get_time_ms();
     }
     //DIGPIN(PIN_BRUSH_SIDES, on);
     //DIGPIN(WHEEL_LEFT_ENABLE, READPIN(WHEEL_LIFT_LEFT) ? off : on);
@@ -155,7 +155,7 @@ int main() {
     set_callback_setup(&setup);
     set_callback_step(&step);
     set_callback_get_time(&get_time);
-    set_callback_get_milliseconds(&get_milliseconds);
+    set_callback_get_time_ms(&get_time_ms);
     set_callback_process_beeps(&process_beeps);
     set_callback_set_motor_throttle(&set_motor_throttle);
     set_callback_get_battery_status(&get_battery_status);

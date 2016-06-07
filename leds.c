@@ -44,8 +44,8 @@ void leds_step() {
     //leds[LED_HOME].brighteness = is_docked() ? 255 : 0;
     leds[LED_REPEAT].brighteness = is_charging() ? 255 : 0;
 
-    if (hw_get_milliseconds() % 50 == 0 && hw_get_milliseconds() != last_step) { // TODO this is getting repetetive. Write a macro
-        last_step = hw_get_milliseconds();
+    if (hw_get_time_ms() % 50 == 0 && hw_get_time_ms() != last_step) { // TODO this is getting repetetive. Write a macro
+        last_step = hw_get_time_ms();
         float charge = get_battery_status() * 3;
         uint_fast8_t values[3] = {0, 0, 0, };
         for (uint_fast8_t i = 0; i < 3 && charge > 0; i++) {

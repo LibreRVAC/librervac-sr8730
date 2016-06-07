@@ -40,18 +40,18 @@ bool pressed_right;
 uint_fast32_t moment_right;
 
 void bumper_step() {
-    if (hw_get_milliseconds() > moment_left + DEBOUNCE_TIME_MS) {
+    if (hw_get_time_ms() > moment_left + DEBOUNCE_TIME_MS) {
         if (!pressed_left && READPIN(PIN_BUMPER_SWITCH_LEFT)) {
             pressed_left = true;
-            moment_left = hw_get_milliseconds();
+            moment_left = hw_get_time_ms();
             cord_event_bumper(-45, 45);
         } else
             pressed_left = false;
     }
-    if (hw_get_milliseconds() > moment_right + DEBOUNCE_TIME_MS) {
+    if (hw_get_time_ms() > moment_right + DEBOUNCE_TIME_MS) {
         if (!pressed_right && READPIN(PIN_BUMPER_SWITCH_RIGHT)) {
             pressed_right = true;
-            moment_right = hw_get_milliseconds();
+            moment_right = hw_get_time_ms();
             cord_event_bumper(+45, 45);
         } else
             pressed_right = false;

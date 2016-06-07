@@ -47,7 +47,7 @@ void handle_beep() {
     if (beep->frequency != 0)
         DIGPIN(PIN_BEEPER, on);
     OpenOC5(OC_ON | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
-    stop_time = beep->duration * 1000 + hw_get_milliseconds();
+    stop_time = beep->duration * 1000 + hw_get_time_ms();
     uint_fast16_t ticks = FOSC / beep->frequency / 8 * FPB_DIV; // / prescaler * FPBDIV
     OpenTimer2(T2_ON | T2_PS_1_8 | T2_SOURCE_INT, ticks);
     duty_cycle = beep->volume * ticks / 2;
@@ -65,7 +65,7 @@ void process_beeps() {
 }
 
 void __ISR(_TIMER_2_VECTOR, IPL3SOFT) T2Interrupt(void) {
-    if (hw_get_milliseconds() >= stop_time) {
+    if (hw_get_time_ms() >= stop_time) {
         handle_beep(); // time for a new value
     } else {
         SetDCOC5PWM(duty_cycle); // just continue
